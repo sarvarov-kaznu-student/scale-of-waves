@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electromagnetic Spectrum Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="languageBox">
+        <label for="languageSelect">Language:</label>
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="kk">Қазақша</option>
+            <option value="ru">Русский</option>
+        </select>
+    </div>
+    <h1 id="title">Electromagnetic Spectrum Visualizer</h1>
+    <div id="controls">
+        <p id="description">Enter the Wavelength (meters), Frequency (Hertz), or Wave Number (rad/m or m⁻¹):</p>
+        <label for="inputType" id="chooseTypeLabel">Choose Type:</label>
+        <select id="inputType">
+            <option value="wavelength">Wavelength (m)</option>
+            <option value="frequency">Frequency (Hz)</option>
+            <option value="waveNumberRad">Wave Number (rad/m)</option>
+            <option value="waveNumberInverse">Wave Number (m⁻¹)</option>
+        </select>
+        <br>
+        <div class="inline">
+            <input type="number" id="valueInput" placeholder="Enter Base Value">
+            <span id="exponentLabel">× 10<sup>^</sup></span>
+            <input type="number" id="exponentInput" placeholder="Exponent" value="0">
+        </div>
+        <br>
+        <button onclick="visualizeWave()" id="classifyWaveButton">Classify Wave</button>
+    </div>
+    <br>
+    <canvas id="spectrumCanvas" width="800" height="200"></canvas>
+    <p id="result"></p>
+    <script src="script.js"></script>
+    <script src="language.js"></script>
+    <script>
+        // Disable right-click, text selection, and keyboard shortcuts
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+        });
+        document.addEventListener('selectstart', (e) => e.preventDefault());
+    </script>
+</body>
+</html>
