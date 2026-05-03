@@ -30,7 +30,10 @@ function classifyWave(wavelength) {
 }
 
 function formatScientificNotation(value) {
-    const exponent = Math.floor(Math.log10(value));
+    if (value === 0) {
+        return "0";
+    }
+    const exponent = Math.floor(Math.log10(Math.abs(value)));
     const base = value / Math.pow(10, exponent);
     return `${base.toFixed(2)} × 10<sup>${exponent}</sup>`;
 }
@@ -83,19 +86,21 @@ function visualizeWave() {
     const formattedWaveNumberM = formatScientificNotation(waveNumberM);
 
     if (waveRange) {
-        document.getElementById(
-            "result"
-        ).innerHTML = `
+        const resultEl = document.getElementById("result");
+        resultEl.innerHTML = `
             ${translations[currentLanguage].resultBox.belongsTo} '${translations[currentLanguage].bands[spectrumRanges.indexOf(waveRange)]}' ${translations[currentLanguage].resultBox.range} ${translations[currentLanguage].resultBox.usedIn} ${translations[currentLanguage].bands[spectrumRanges.indexOf(waveRange)]}.<br>
             ${translations[currentLanguage].resultBox.wavelength} ${formattedWavelength} ${translations[currentLanguage].units.meters}.<br>
             ${translations[currentLanguage].resultBox.frequency} ${formattedFrequency} ${translations[currentLanguage].units.hertz}.<br>
             ${translations[currentLanguage].resultBox.waveNumberRad} ${formattedWaveNumberRad}.<br>
             ${translations[currentLanguage].resultBox.waveNumberM} ${formattedWaveNumberM}.
         `;
+        resultEl.dataset.result = "true";
         drawSpectrum(waveRange, wavelength);
     } else {
-        document.getElementById("result").innerText =
+        const resultEl = document.getElementById("result");
+        resultEl.innerText =
             translations[currentLanguage].resultBox.error || "Invalid input!";
+        delete resultEl.dataset.result;
     }
 }
 
